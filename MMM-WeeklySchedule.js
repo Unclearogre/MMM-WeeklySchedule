@@ -4,6 +4,12 @@
  *
  * By Ulrich Pinsdorf
  * MIT Licensed.
+ *
+ * 06/24/2024 - Unclearogre - Added support for an array of timeslots instead of
+ *                            a single timeslot list.  Note that it still supports
+ *                            the single timeslot list so it won't break anything.
+ *                            Also supports a default set of times ("def:") in the
+ *                            timeslot array.
  */
 
 Module.register("MMM-WeeklySchedule", {
@@ -64,7 +70,16 @@ Module.register("MMM-WeeklySchedule", {
 		}
 
 		// get timeslots
-		var timeslots = this.config.schedule.timeslots;
+		//var timeslots = this.config.schedule.timeslots;
+		var timeslots = this.config.schedule.timeslots[dow];
+		if(timeslots == undefined)
+		{
+			timeslots = this.config.schedule.timeslots["def"];
+		}
+		if(timeslots == undefined)
+		{
+			timeslots = this.config.schedule.timeslots;
+		}
 
 		// build table with timeslot definitions and lessons
 		wrapper = document.createElement("table");
